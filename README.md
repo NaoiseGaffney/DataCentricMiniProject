@@ -1,39 +1,172 @@
-<img src="https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png" style="margin: 0;">
+# Data-Centric Mini-Project ("Kicking the tyres")
 
-Welcome USER_NAME,
+1. brew install mongodb/brew/mongodb-community-shell
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project.
+2. mongo "mongodb+srv://mdbcluster-vhvci.mongodb.net/TestMDB" --username mdb_c_root
 
-## Gitpod Reminders
+3. coll = db.Names
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+4. coll.insert({first: "John", last: "Lennon", dob: "09/10/1940", gender: "m", hair_colour: "brown", nationality: "english", occupation: "beatle" });
 
-`python3 -m http.server`
+## Search / View Collections
 
-A blue button should appear to click: *Make Public*,
+### Install MongoDB Client (see abocve for MacOSX)
 
-Another blue button should appear to click: *Open Browser*.
+> Download and install MongoDB client 4.0.6 for Atlas on AWS Cloud9
+>
+> wget -q https://git.io/fjzf1 -O /tmp/setupmongodb.sh && source /tmp/setupmongodb.sh
+>
+> Download and install MongoDB client 4.0.6 for Atlas on old Cloud9
+>
+> wget -q https://git.io/fh7vV -O /tmp/setupmongodb.sh && source /tmp/setupmongodb.sh
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+### Connect to MongoDB
 
-A blue button should appear to click: *Make Public*,
+> Connect to the Mongo Database on Atlas
+>
+> NOTE: REPLACE THE `<dbuser>` & `<dbname>` WITH YOUR OWN PERSONAL
+>
+> VALUES (WITHOUT THE ANGULAR BRACKETS)
+>
+> mongo "mongodb+srv://myfirstcluster-fsmjm.mongodb.net/<dbname>" --username <dbuser>
 
-Another blue button should appear to click: *Open Browser*.
+### Insert Data
+````
+db.Names.insert({
+    first: 'john',
+    last: 'lennon',
+    dob: '09/10/1940',
+    gender: 'm',
+    hair_colour: 'brown',
+    occupation: 'beatle',
+    nationality: 'english'
+});
+db.Names.insert({
+    first: 'eve',
+    last: 'ryan',
+    dob: '19/09/1992',
+    gender: 'f',
+    hair_colour: 'pink',
+    occupation: 'developer',
+    nationality: 'irish'
+});
+db.Names.insert({
+    first: 'martha',
+    last: 'fenton',
+    dob: '15/05/1974',
+    gender: 'f',
+    hair_colour: 'brown',
+    occupation: 'manager',
+    nationality: 'irish'
+});
+db.Names.insert({
+    first: 'Neil',
+    last: 'Hanslem',
+    dob: '14/07/1983',
+    gender: 'm',
+    hair_colour: 'blonde',
+    occupation: 'actor',
+    nationality: 'english'
+});
+db.Names.insert({
+    first: 'Rocky',
+    last: 'Persolm',
+    dob: '19/12/1994',
+    gender: 'f',
+    hair_colour: 'black',
+    occupation: 'activist',
+    nationality: 'american'
+});
+````
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the backend lessons.
+````
+  
+// Show all collections in the current DB
+show collections
 
-## Updates Since The Instructional Video
+// Use the `Names` collection and store a reference to it in a
+// variable called `coll`
+coll = db.Names;
 
-We continually tweak and adjust this template to help give you the best experience. Here are the updates since the original video was made:
+// Create some data
+coll.insert({
+    first: 'john',
+    last: 'lennon',
+    dob: '09/10/1940',
+    gender: 'm',
+    hair_colour: 'brown',
+    occupation: 'beatle',
+    nationality: 'english'
+});
+coll.insert({
+    first: 'eve',
+    last: 'ryan',
+    dob: '19/09/1992',
+    gender: 'f',
+    hair_colour: 'pink',
+    occupation: 'developer',
+    nationality: 'irish'
+});
+coll.insert({
+    first: 'martha',
+    last: 'fenton',
+    dob: '15/05/1974',
+    gender: 'f',
+    hair_colour: 'brown',
+    occupation: 'manager',
+    nationality: 'irish'
+});
+coll.insert({
+    first: 'Neil',
+    last: 'Hanslem',
+    dob: '14/07/1983',
+    gender: 'm',
+    hair_colour: 'blonde',
+    occupation: 'actor',
+    nationality: 'english'
+});
+coll.insert({
+    first: 'Rocky',
+    last: 'Persolm',
+    dob: '19/12/1994',
+    gender: 'f',
+    hair_colour: 'black',
+    occupation: 'activist',
+    nationality: 'american'
+});
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+// Find all of the documents in the collection
+coll.find()
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+// Find all records that have a gender of `f`
+coll.find({gender: 'f'});
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+// Find all records that have a gender of `f` and a
+// nationality of `english`
+coll.find({gender: 'f', nationality: 'english'});
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+// Find all records that have a gender of `f` and a
+// nationality of `american` or `irish`
+coll.find({gender: 'f', $or: [{nationality: 'american'}, {nationality: 'irish'}]});
 
---------
+// Find all records that have a gender of `f` and a
+// nationality of `american` or `irish` and sort them in an
+// ascending according to the nationality
+coll.find({gender: 'f', $or: [{nationality: 'american'}, {nationality: 'irish'}]}).sort({nationality: 1});
+```
 
-Happy coding!
+## Update Collections
+
+> Update the first matching record
+>
+> coll.update({nationality: 'irish'}, {$set: {hair_colour: 'blue'}});
+
+> Update all matching records
+>
+> coll.update({nationality: 'irish'}, {$set: {hair_colour: 'purple'}},{multi:true});
+
+## Delete Collections
+
+> Delete a record that has a `first` of `kate` and a `last` of `bush`
+>
+> coll.remove({first: 'kate', last: 'bush'});
