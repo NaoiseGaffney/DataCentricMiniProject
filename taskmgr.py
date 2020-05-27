@@ -98,6 +98,9 @@ def add_category():
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-            port=os.environ.get('PORT'),
-            debug=True)
+    if os.environ.get("PRODUCTION") == "ON":
+        print(os.environ.get("PRODUCTION"))
+        app.run(host=os.environ.get('IP'), port=os.environ.get('PORT'), debug=False)
+    else:
+        print(os.environ.get("PRODUCTION"))
+        app.run(host=os.environ.get('IP'), port=os.environ.get('PORT'), debug=True)
