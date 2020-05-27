@@ -97,10 +97,9 @@ def add_category():
     return render_template('addcategory.html')
 
 
+# export PRODUCTION=ON | OFF in TEST, and in PRODUCTION App -> Settings -> Reveal Config Vars -> KEY: PRODUCTION, VALUE: ON
 if __name__ == '__main__':
     if os.environ.get("PRODUCTION") == "ON":
-        print(os.environ.get("PRODUCTION"))
         app.run(host=os.environ.get('IP'), port=os.environ.get('PORT'), debug=False)
     else:
-        print(os.environ.get("PRODUCTION"))
         app.run(host=os.environ.get('IP'), port=os.environ.get('PORT'), debug=True)
